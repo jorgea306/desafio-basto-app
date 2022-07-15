@@ -104,7 +104,7 @@ const ModalComponent: React.FC<DialogContentProps> = ({
         {edit ? (<Button autoFocus onClick={() => {
           onEdit && onEdit();
           onClose(false);
-        }}>
+        }}disabled={isDisabled()}>
           {editButtonText}
         </Button>)
           : (<Button

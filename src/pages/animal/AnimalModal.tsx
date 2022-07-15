@@ -38,12 +38,17 @@ const AnimalModal: React.FC<AnimalModalProps> = ({
             type_animal === '' ||
             name === '' ||
             type_device === '' ||
-            number_device === ''
+            number_device === '' ||
+            id_senasa.length !== 16 ||
+            number_device.length !== 8 ||
+            name.length > 200
         ) {
             return true;
         }
         return false;
     };
+
+ 
 
     const saveSeniority = async () => {
         if (
@@ -51,7 +56,9 @@ const AnimalModal: React.FC<AnimalModalProps> = ({
             type_animal?.trim() &&
             name?.trim() &&
             type_device?.trim() &&
-            number_device?.trim()
+            number_device?.trim() &&
+            id_senasa.length === 16 &&
+            number_device.length === 8
         ) {
             await dispatch(
                 createAnimal({
@@ -80,13 +87,16 @@ const AnimalModal: React.FC<AnimalModalProps> = ({
         >
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-amount">ID Senasa</InputLabel>
-                    <Input
+                    <TextField
                         id="standard-adornment-amount"
                         value={id_senasa}
                         onChange={(e) => setId_senasa(e.target.value)}
                         required
+                        helperText="El ID_Senasa debe ser de 16 caracteres"
+                        variant="standard"
+                        label="ID Senasa"
                     />
+
                 </FormControl>
 
                 <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
@@ -124,14 +134,18 @@ const AnimalModal: React.FC<AnimalModalProps> = ({
                 </FormControl>
 
                 <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-amount">Nombre de Potrero</InputLabel>
-                    <Input
-                        id="standard-adornment-amount"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </FormControl>
+                   
+                   <TextField
+                       id="standard-adornment-amount"
+                       label="Nombre de Potrero"
+                       value={name}
+                       onChange={(e) => setName(e.target.value)}
+                       required
+                       multiline
+                       variant="standard"
+                       helperText="El Nombre de Potrero debe tener 200 caracteres como maximo"
+                   />
+               </FormControl>
 
                 <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
                     <TextField
@@ -155,12 +169,14 @@ const AnimalModal: React.FC<AnimalModalProps> = ({
                 </FormControl>
 
                 <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-amount">Numero de Dispositivo</InputLabel>
-                    <Input
+                    <TextField
                         id="standard-adornment-amount"
+                        label="Numero de Dispositivo"
                         value={number_device}
                         onChange={(e) => setNumber_device(e.target.value)}
                         required
+                        helperText="El Numero de Dispositivo debe contener 8 caracteres"
+                        variant="standard"
                     />
                 </FormControl>
             </Box>
@@ -191,6 +207,21 @@ export const AnimalModal2: React.FC<AnimalModal2Props> = ({
     const [type_device, setType_device] = useState<string>(animal.type_device);
     const [number_device, setNumber_device] = useState<string>(animal.number_device);
 
+    const isDisabled = () => {
+        if (
+            id_senasa === '' ||
+            type_animal === '' ||
+            name === '' ||
+            type_device === '' ||
+            number_device === '' ||
+            id_senasa.length !== 16 ||
+            number_device.length !== 8 ||
+            name.length > 200
+        ) {
+            return true;
+        }
+        return false;
+    };
 
     const removeAnimal = async () => {
         if (animal._id !== undefined) {
@@ -205,8 +236,10 @@ export const AnimalModal2: React.FC<AnimalModal2Props> = ({
             type_animal?.trim() &&
             name?.trim() &&
             type_device?.trim() &&
-            number_device?.trim()
-            ) {
+            number_device?.trim() &&
+            id_senasa.length === 16 &&
+            number_device.length === 8
+        ) {
             await dispatch(
                 updateAnimal(
                     animal._id,
@@ -232,7 +265,7 @@ export const AnimalModal2: React.FC<AnimalModal2Props> = ({
             onClose={onClose2}
             onSave={removeAnimal}
             onEdit={update}
-            isDisabled={() => false}
+            isDisabled={isDisabled}
             title="Animal"
             acceptButtonText="Aceptar"
             cancelButtonText="Cancelar"
@@ -241,13 +274,15 @@ export const AnimalModal2: React.FC<AnimalModal2Props> = ({
             edit
         >
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-            <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
+                <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
                     <InputLabel htmlFor="standard-adornment-amount">ID Senasa</InputLabel>
                     <Input
                         id="standard-adornment-amount"
                         value={id_senasa}
                         onChange={(e) => setId_senasa(e.target.value)}
                         required
+
+
                     />
                 </FormControl>
 
@@ -286,12 +321,16 @@ export const AnimalModal2: React.FC<AnimalModal2Props> = ({
                 </FormControl>
 
                 <FormControl fullWidth sx={{ m: 1, width: '25ch' }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-amount">Nombre de Potrero</InputLabel>
-                    <Input
+                   
+                    <TextField
                         id="standard-adornment-amount"
+                        label="Nombre de Potrero"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                        multiline
+                        variant="standard"
+                        helperText="El Nombre de Potrero debe tener 200 caracteres como maximo"
                     />
                 </FormControl>
 
